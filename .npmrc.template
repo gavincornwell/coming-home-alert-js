@@ -1,0 +1,4 @@
+sam_s3_bucket_name = fake-s3-bucket
+param_stack_name = coming-home-alert-js-dev
+param_valid_user_id = abc123
+param_phone_number = +fake-intl-number

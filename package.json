@@ -1,0 +1,31 @@
+{
+  "name": "coming-home-alert",
+  "version": "1.0.0",
+  "description": "AWS Lambda function to handle the triggering of an alert",
+  "main": "index.js",
+  "scripts": {
+    "test": "node unit-test.js",
+    "integration-test": "newman run --global-var userId=$npm_config_param_valid_user_id --global-var baseUrl=http://localhost:3000 --global-var stageName=Dev postman-collection.json",
+    "build:zip": "zip -i \\*.js \\*.json -r coming-home.zip index.js $(npm list --prod --parseable | sed -nE 's/.*\\/(node_modules\\/.*)/\\1/p' | awk '{printf \"%s \", $0;}')",
+    "build:template": "aws cloudformation package --template template.yaml --s3-bucket $npm_config_sam_s3_bucket_name --output-template-file deploy.yaml",
+    "build": "npm run build:zip && npm run build:template",
+    "clean:zip": "rm -f coming-home.zip",
+    "clean:template": "rm -f deploy.yaml",
+    "clean": "npm run clean:zip && npm run clean:template",
+    "deploy": "aws cloudformation deploy --template-file $(pwd)/deploy.yaml --stack-name $npm_config_param_stack_name --parameter-overrides PhoneNumber=\"$npm_config_param_phone_number\" ValidUserId=\"$npm_config_param_valid_user_id\" --capabilities \"CAPABILITY_IAM\"",
+    "undeploy": "aws cloudformation delete-stack --stack-name $npm_config_param_stack_name"
+  },
+  "keywords": [
+    "coming home",
+    "lambda"
+  ],
+  "authors": [
+    "Gavin Cornwell <gavin.cornwell@alfresco.com> (https://www.alfresco.com)"
+  ],
+  "license": "Apache-2.0",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.192.0"
+  }
+}

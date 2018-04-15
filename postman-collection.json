@@ -1,0 +1,142 @@
+{
+	"info": {
+		"_postman_id": "10bfc186-dead-463f-9f36-f34ce766d733",
+		"name": "Coming Home Alert",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Trigger Alert",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 202\"] = responseCode.code === 202;",
+							"tests[\"content type is application/json\"] = (postman.getResponseHeader(\"Content-Type\").startsWith(\"application/json\"));",
+							"",
+							"// test response body",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"messageId is present\"] = jsonData.messageId !== undefined;"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"message\": \"Postman {{stageName}} Testing\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/{{userId}}/trips",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"{{userId}}",
+						"trips"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Invalid User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 401\"] = responseCode.code === 401;",
+							"tests[\"content type is application/json\"] = (postman.getResponseHeader(\"Content-Type\").startsWith(\"application/json\"));",
+							"",
+							"// test response body",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"error message is correct\"] = jsonData.error === \"Provided user ID is not valid\";"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"message\": \"Postman {{stageName}} Testing\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/userId/trips",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"userId",
+						"trips"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Missing message",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "66cf74ad-e121-41fa-945b-f608524f43e1",
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"status code is 400\"] = responseCode.code === 400;",
+							"tests[\"content type is application/json\"] = (postman.getResponseHeader(\"Content-Type\").startsWith(\"application/json\"));",
+							"",
+							"// test response body",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"error message is correct\"] = jsonData.error === \"message property in request body is required\";"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/users/{{userId}}/trips",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"users",
+						"{{userId}}",
+						"trips"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

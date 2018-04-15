@@ -1,0 +1,12 @@
+{
+    "resource": "/users/{userId}/trips",
+    "path": "/users/invalid/trips",
+    "httpMethod": "POST",
+    "headers": null,
+    "queryStringParameters": null,
+    "pathParameters": {
+        "userId": "invalid"
+    },
+    "body": "{\n    \"message\": \"JavaScript Unit Testing\"\n}",
+    "isBase64Encoded": false
+}

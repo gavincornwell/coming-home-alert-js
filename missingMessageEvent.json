@@ -1,0 +1,12 @@
+{
+    "resource": "/users/{userId}/trips",
+    "path": "/users/abc123/trips",
+    "httpMethod": "POST",
+    "headers": null,
+    "queryStringParameters": null,
+    "pathParameters": {
+        "userId": "abc123"
+    },
+    "body": "{}",
+    "isBase64Encoded": false
+}

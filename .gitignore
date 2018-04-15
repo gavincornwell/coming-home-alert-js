@@ -1,0 +1,17 @@
+# Mac files
+.DS_Store
+
+# node files
+node_modules
+npm-debug.log
+
+# environment files
+.npmrc
+testEnv.sh
+
+# Build and deploy files
+*.zip
+deploy.yaml
+
+# Postman
+report.*
