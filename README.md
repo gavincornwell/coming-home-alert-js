@@ -8,13 +8,39 @@ The alert is triggered by a simple REST API, this could be done manually or auto
 
 * AWS CLI
 * NodeJS 6.10 or later
+* SAM Local
 
 # Build
 
+Copy ```.npmrc.template``` to ```.npmrc``` and change the variables accordingly
+
+```bash
+npm install
+npm run build
+```
+
+# Deploy
+
+```bash
+npm run deploy
+```
+
 # Test
+
+Copy ```testEnv.sh.template``` to ```testEnv.sh``` and change the variables accordingly.
+
+Execute ```testEnv.sh``` in the terminal you'll be running the tests.
 
 ## Unit
 
+```bash
+npm test
+```
+
 ## Integration
 
-# Deploy
+```bash
+sam local start-api
+npm run integration-test
+```
+
